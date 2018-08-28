@@ -1,11 +1,17 @@
 package com.example.eloyyyyyyy.pruebasapiyoutube;
 
-import android.app.Activity;
+import android.app.Dialog;
+import android.app.Fragment;
 import android.content.Intent;
 import android.os.Bundle;
-import android.provider.MediaStore;
+
+import android.support.v4.app.DialogFragment;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -14,7 +20,6 @@ import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
-import com.android.volley.toolbox.RequestFuture;
 import com.android.volley.toolbox.Volley;
 import com.google.android.youtube.player.YouTubeBaseActivity;
 import com.google.android.youtube.player.YouTubeInitializationResult;
@@ -22,22 +27,17 @@ import com.google.android.youtube.player.YouTubePlayer;
 import com.google.android.youtube.player.YouTubePlayerView;
 
 import org.json.JSONArray;
-import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.Random;
-import java.util.concurrent.ExecutionException;
 
-import static java.lang.Thread.sleep;
+public class ActivityReproductorVideos extends YouTubeBaseActivity implements
+        YouTubePlayer.OnInitializedListener{
 
-public class MainActivity extends YouTubeBaseActivity implements
-        YouTubePlayer.OnInitializedListener, YouTubePlayer.PlaybackEventListener{
-
-    Button siguienteVideo;
-    TextView tvNombreVideo;
-    TextView tvNombreCanal;
-    TextView tvFechaSubida;
+    Button siguienteVideo, favorito;
+    TextView tvNombreVideo, tvNombreCanal, tvFechaSubida, tvVisitas, tvExplicacion, tvNum1, tvNum2;
+    EditText etNum1, etNum2;
     View v;
 
     private String claveYT="AIzaSyD1ykwAYUodC9hA_kUrRRj7oCJXk8iPSYM";
@@ -50,22 +50,40 @@ public class MainActivity extends YouTubeBaseActivity implements
     ArrayList<StatsVideo> listStatsVideo = new ArrayList<StatsVideo>();
     Video video=new Video();
     StatsVideo statsVideo = new StatsVideo();
+    int visitasMenor = 1000;
+    int visitasMayor = 5000;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_reproductor_videos);
 
         youTubePlayerView=(YouTubePlayerView)findViewById(R.id.youtube_view);
         youTubePlayerView.initialize(claveYT, this);
         siguienteVideo=(Button)findViewById(R.id.btnSiguienteVideo);
+        favorito=(Button)findViewById(R.id.btnFavoritos);
         tvNombreVideo=(TextView)findViewById(R.id.tvNombreVideo);
         tvNombreCanal=(TextView)findViewById(R.id.tvNombreCanal);
         tvFechaSubida=(TextView)findViewById(R.id.tvFecha);
+        tvVisitas=(TextView)findViewById(R.id.tvVisitas);
 
         siguienteVideo(v);
-
     }
+
+    //Metodo del menu
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_reproductor, menu);
+        return true;
+    }
+
+    //Método del menú
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        return true;
+    }
+
 //-----------------------------------------------------------------------------------------------------------------------------
 //Mis Metodos
 
@@ -124,8 +142,16 @@ public class MainActivity extends YouTubeBaseActivity implements
                         video.setTitulo(tituloVideo);
 
                         String fechaSubida=jsonArray.getJSONObject(i).getJSONObject("snippet").getString("publishedAt");
-                        String SfechaSubida=fechaSubida.substring(0, 10);
-                        video.setDiaSubida(SfechaSubida);
+                        String FfechaSubida=fechaSubida.substring(0, 10);
+
+                        //Fecha bonita
+                        String fechaAnno = FfechaSubida.substring(0, 4);
+                        String fechaMes = FfechaSubida.substring(5, 7);
+                        String fechaDia = FfechaSubida.substring(8, 10);
+
+                        String fechaFinal= fechaDia + "/" + fechaMes + "/" + fechaAnno;
+
+                        video.setDiaSubida(fechaFinal);
 
                         String nombreCanal=jsonArray.getJSONObject(i).getJSONObject("snippet").getString("channelTitle");
                         video.setNombreCanal(nombreCanal);
@@ -139,21 +165,17 @@ public class MainActivity extends YouTubeBaseActivity implements
                     String idVideos = listVideo.get(0).getIdVideo();
                     System.out.println("Id a reproducir YA(sacarJsonInfoVideo): "+ idVideos);
 
-                    //youTubePlayer1.loadVideo(idVideos);
-                    //youTubePlayer1.play();
-
-                    tvNombreVideo.setText(listVideo.get(0).getTitulo());
-                    tvNombreCanal.setText(listVideo.get(0).getNombreCanal());
-                    tvFechaSubida.setText(listVideo.get(0).getDiaSubida());
-
                     String urlStatsVideo="https://www.googleapis.com/youtube/v3/videos?part=statistics&id="+idVideos+"&key="+claveYT;
 
                     sacarJsonStats(urlStatsVideo, idVideos);
 
-
-                } catch (JSONException e) {
+                    /*
+                    tvNombreVideo.setText(listVideo.get(0).getTitulo());
+                    tvNombreCanal.setText(listVideo.get(0).getNombreCanal());
+                    tvFechaSubida.setText(listVideo.get(0).getDiaSubida());
+                    */
+                } catch (Exception e) {
                     siguienteVideo(v);
-                    Toast.makeText(getApplicationContext(), "Holi", Toast.LENGTH_LONG).show();
                 }
             }
         }, new Response.ErrorListener() {
@@ -185,15 +207,18 @@ public class MainActivity extends YouTubeBaseActivity implements
                             listStatsVideo.add(statsVideo);
                         }
 
+                        //tvVisitas.setText(listStatsVideo.get(0).getVisitas() + " visitas");
+
                         String visitasS = statsVideo.getVisitas();
                         visitas=Integer.parseInt(visitasS);
                         System.out.println("Numero de visitas video dentro bucle(sacarJsonStats): " + visitas);
 
-                    } catch (JSONException e) {
-                        e.printStackTrace();
+                    } catch (Exception e) {
+                        siguienteVideo(v);
                     }
 
-                if(visitas<1000) {
+                if(visitas <= visitasMayor && visitas >= visitasMenor) {
+                    mostrarDatos();
                     youTubePlayer1.loadVideo(idVideo);
                     youTubePlayer1.play();
                     System.out.println("Numero de visitas video salida bucle(sacarJsonStats): " + visitas);
@@ -212,6 +237,14 @@ public class MainActivity extends YouTubeBaseActivity implements
         request.add(jsonObjectRequest);
     }
 
+    public void mostrarDatos(){
+        tvNombreVideo.setText(listVideo.get(0).getTitulo());
+        tvNombreCanal.setText(listVideo.get(0).getNombreCanal());
+        tvFechaSubida.setText(listVideo.get(0).getDiaSubida());
+
+        tvVisitas.setText(listStatsVideo.get(0).getVisitas() + " visitas");
+    }
+
     //Metodo al pulsar el botón
     public void siguienteVideo(View v){
 
@@ -221,6 +254,7 @@ public class MainActivity extends YouTubeBaseActivity implements
         String urlBuscarVideo="https://www.googleapis.com/youtube/v3/search?part=id,snippet&maxResults=5&type=video&q="+idVideo+"&key="+claveYT;
 
         sacarJsonInfoVideo(urlBuscarVideo);
+        Toast.makeText(getApplicationContext(), "Buscando vídeo para reproducir... Puede demorarse, dependiendo de los criterios de búsqueda", Toast.LENGTH_LONG).show();
     }
 
 //Fin Mis Metodos
@@ -236,8 +270,7 @@ public class MainActivity extends YouTubeBaseActivity implements
             youTubePlayer1.setPlayerStyle(YouTubePlayer.PlayerStyle.DEFAULT);
 
             //Carga y reproduce directamente el video
-            youTubePlayer1.loadVideo("DRS_PpOrUZ4");
-            youTubePlayer1.play();
+
         }
     }
 
@@ -266,28 +299,4 @@ public class MainActivity extends YouTubeBaseActivity implements
         return youTubePlayerView;
     }
 
-    @Override
-    public void onPlaying() {
-
-    }
-
-    @Override
-    public void onPaused() {
-
-    }
-
-    @Override
-    public void onStopped() {
-
-    }
-
-    @Override
-    public void onBuffering(boolean b) {
-
-    }
-
-    @Override
-    public void onSeekTo(int i) {
-
-    }
 }

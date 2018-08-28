@@ -4,29 +4,29 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.eloyyyyyyy.pruebasapiyoutube.MainActivity">
+    tools:context="com.example.eloyyyyyyy.pruebasapiyoutube.ActivityReproductorVideos">
 
     <Button
         android:id="@+id/btnSiguienteVideo"
-        android:layout_width="163dp"
-        android:layout_height="wrap_content"
+        android:layout_width="66dp"
+        android:layout_height="50dp"
         android:layout_alignParentBottom="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginBottom="96dp"
-        android:layout_marginStart="98dp"
+        android:layout_alignStart="@+id/tvNombreVideo"
+        android:layout_marginBottom="94dp"
         android:layout_weight="1"
+        android:background="@drawable/aleatorio"
         android:onClick="siguienteVideo"
-        android:text="Siguiente Video"
-        android:layout_alignParentLeft="true"
-        android:layout_marginLeft="98dp" />
+        android:layout_alignLeft="@+id/tvNombreVideo" />
 
     <com.google.android.youtube.player.YouTubePlayerView
         android:id="@+id/youtube_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        tools:ignore="MissingConstraints"
         tools:layout_editor_absoluteX="0dp"
         tools:layout_editor_absoluteY="199dp"
-        tools:ignore="MissingConstraints" />
+        android:layout_alignParentLeft="true" />
 
     <TextView
         android:id="@+id/tvNombreVideo"
@@ -47,8 +47,9 @@
         android:id="@+id/tvNombreCanal"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
         android:layout_alignParentStart="true"
-        android:layout_centerVertical="true"
+        android:layout_marginBottom="223dp"
         android:layout_marginStart="43dp"
         android:text="Nombre del Canal"
         android:textColor="@color/common_google_signin_btn_text_dark_focused"
@@ -60,12 +61,33 @@
         android:id="@+id/tvFecha"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/tvNombreCanal"
         android:layout_alignParentBottom="true"
         android:layout_alignStart="@+id/tvNombreCanal"
-        android:layout_marginBottom="211dp"
-        android:text="Fecha de subida del vídeo"
+        android:layout_marginBottom="180dp"
+        android:text="Fecha vídeo"
         android:textColor="@color/common_google_signin_btn_text_dark_focused"
-        android:textSize="18sp"
-        android:layout_alignLeft="@+id/tvNombreCanal" />
+        android:textSize="18sp" />
+
+    <Button
+        android:id="@+id/btnFavoritos"
+        android:layout_width="66dp"
+        android:layout_height="50dp"
+        android:layout_alignParentEnd="true"
+        android:layout_alignTop="@+id/btnSiguienteVideo"
+        android:layout_marginEnd="14dp"
+        android:background="@drawable/corazon"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="14dp" />
+
+    <TextView
+        android:id="@+id/tvVisitas"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/tvFecha"
+        android:layout_toStartOf="@+id/btnFavoritos"
+        android:text="Visitas"
+        android:textColor="@android:color/background_dark"
+        android:textSize="18sp" />
 
 </RelativeLayout>
