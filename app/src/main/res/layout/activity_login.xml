@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Activity.ActivityLogin">
+
+    <ImageView
+        android:id="@+id/ivLogo"
+        android:layout_width="249dp"
+        android:layout_height="45dp"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="55dp"
+        app:srcCompat="@drawable/imagenlogo" />
+
+    <TextView
+        android:id="@+id/tvInicio"
+        android:layout_width="297dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="145dp"
+        android:text="¿Te atreves con videos aleatorios?"
+        android:textColor="@color/colorPrimary"
+        android:textSize="30sp"
+        android:textStyle="italic" />
+
+    <Button
+        android:id="@+id/btnLogin"
+        android:layout_width="183dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="173dp"
+        android:background="@drawable/boton_redondeado"
+        android:onClick="login"
+        android:text="Tengo una cuenta"
+        android:textColor="@android:color/background_light" />
+
+    <Button
+        android:id="@+id/btnRegistro"
+        android:layout_width="141dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="81dp"
+        android:background="@drawable/boton_redondeado"
+        android:onClick="registro"
+        android:text="Registrarme"
+        android:textColor="@android:color/background_light" />
+</RelativeLayout>

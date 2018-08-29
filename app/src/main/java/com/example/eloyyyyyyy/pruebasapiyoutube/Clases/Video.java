@@ -1,4 +1,4 @@
-package com.example.eloyyyyyyy.pruebasapiyoutube;
+package com.example.eloyyyyyyy.pruebasapiyoutube.Clases;
 
 public class Video {
     private String idVideo;

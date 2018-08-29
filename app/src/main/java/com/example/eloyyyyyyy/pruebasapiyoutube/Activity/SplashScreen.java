@@ -1,4 +1,4 @@
-package com.example.eloyyyyyyy.pruebasapiyoutube;
+package com.example.eloyyyyyyy.pruebasapiyoutube.Activity;
 
 import android.content.Intent;
 import android.os.Handler;
@@ -7,6 +7,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
+
+import com.example.eloyyyyyyy.pruebasapiyoutube.R;
 
 public class SplashScreen extends AppCompatActivity {
 

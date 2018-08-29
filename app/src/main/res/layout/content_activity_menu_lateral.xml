@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context=".ActivityMenuLateral"
+    tools:context=".Activity.ActivityMenuLateral"
     tools:showIn="@layout/app_bar_activity_menu_lateral">
 
     <ImageView
@@ -25,7 +25,7 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="120dp"
         android:text="¿Qué es AleTube?"
-        android:textColor="@android:color/background_dark"
+        android:textColor="@color/colorPrimary"
         android:textSize="24sp"
         android:textStyle="bold" />
 
@@ -33,26 +33,26 @@
         android:id="@+id/tvDescripcion"
         android:layout_width="373dp"
         android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:layout_centerVertical="true"
+        android:layout_marginLeft="11dp"
         android:layout_marginStart="11dp"
         android:text="AleTube es una aplicación pensada para ver vídeos totalmente aleatorios, con un número mínimo y máximo de visitas(seleccionado por el usuario). "
-        android:textColor="@android:color/background_dark"
-        android:textSize="20sp"
-        android:layout_marginLeft="11dp"
-        android:layout_alignParentLeft="true" />
+        android:textColor="@color/colorPrimary"
+        android:textSize="20sp" />
 
     <TextView
         android:id="@+id/tvDescripcion2"
         android:layout_width="371dp"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:layout_marginBottom="94dp"
+        android:layout_marginLeft="13dp"
         android:layout_marginStart="13dp"
         android:text="Además contiene la funcionalidad de añadir vídeos a favoritos para poder visualizarlos después."
-        android:textColor="@android:color/background_dark"
-        android:textSize="20sp"
-        android:layout_marginLeft="13dp"
-        android:layout_alignParentLeft="true" />
+        android:textColor="@color/colorPrimary"
+        android:textSize="20sp" />
 </RelativeLayout>

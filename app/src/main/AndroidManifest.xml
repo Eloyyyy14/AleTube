@@ -17,7 +17,7 @@
         android:screenOrientation="portrait"
         android:supportsRtl="true">
         <activity
-            android:name=".SplashScreen"
+            android:name=".Activity.SplashScreen"
             android:theme="@style/Theme.AppCompat.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -26,12 +26,18 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".ActivityReproductorVideos"
+            android:name=".Activity.ActivityReproductorVideos"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ActivityMenuLateral"
+            android:name=".Activity.ActivityMenuLateral"
             android:label="AleTube"
             android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".Activity.ActivityLogin"
+            android:label="AleTube"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".Activity.ActivityIniciarSesion" />
+        <activity android:name=".Activity.ActivityRegistro"></activity>
     </application>
 
 </manifest>

@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.eloyyyyyyy.pruebasapiyoutube.ActivityReproductorVideos">
+    tools:context="com.example.eloyyyyyyy.pruebasapiyoutube.Activity.ActivityReproductorVideos">
 
     <Button
         android:id="@+id/btnSiguienteVideo"
@@ -73,21 +73,31 @@
         android:id="@+id/btnFavoritos"
         android:layout_width="66dp"
         android:layout_height="50dp"
-        android:layout_alignParentEnd="true"
         android:layout_alignTop="@+id/btnSiguienteVideo"
-        android:layout_marginEnd="14dp"
-        android:background="@drawable/corazon"
-        android:layout_alignParentRight="true"
-        android:layout_marginRight="14dp" />
+        android:layout_centerHorizontal="true"
+        android:background="@drawable/corazon" />
 
     <TextView
         android:id="@+id/tvVisitas"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignTop="@+id/tvFecha"
-        android:layout_toStartOf="@+id/btnFavoritos"
+        android:layout_toStartOf="@+id/btnCompartir"
         android:text="Visitas"
         android:textColor="@android:color/background_dark"
-        android:textSize="18sp" />
+        android:textSize="18sp"
+        android:layout_toLeftOf="@+id/btnCompartir" />
+
+    <Button
+        android:id="@+id/btnCompartir"
+        android:layout_width="66dp"
+        android:layout_height="50dp"
+        android:layout_alignParentEnd="true"
+        android:layout_alignTop="@+id/btnSiguienteVideo"
+        android:layout_marginEnd="19dp"
+        android:background="@drawable/iconocompartir2"
+        android:onClick="compartir"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="19dp" />
 
 </RelativeLayout>

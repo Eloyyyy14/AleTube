@@ -1,17 +1,13 @@
-package com.example.eloyyyyyyy.pruebasapiyoutube;
+package com.example.eloyyyyyyy.pruebasapiyoutube.Activity;
 
-import android.app.Dialog;
-import android.app.Fragment;
 import android.content.Intent;
 import android.os.Bundle;
 
-import android.support.v4.app.DialogFragment;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -21,6 +17,9 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
+import com.example.eloyyyyyyy.pruebasapiyoutube.R;
+import com.example.eloyyyyyyy.pruebasapiyoutube.Clases.StatsVideo;
+import com.example.eloyyyyyyy.pruebasapiyoutube.Clases.Video;
 import com.google.android.youtube.player.YouTubeBaseActivity;
 import com.google.android.youtube.player.YouTubeInitializationResult;
 import com.google.android.youtube.player.YouTubePlayer;
@@ -35,7 +34,7 @@ import java.util.Random;
 public class ActivityReproductorVideos extends YouTubeBaseActivity implements
         YouTubePlayer.OnInitializedListener{
 
-    Button siguienteVideo, favorito;
+    Button siguienteVideo, favorito, btnCompartir;
     TextView tvNombreVideo, tvNombreCanal, tvFechaSubida, tvVisitas, tvExplicacion, tvNum1, tvNum2;
     EditText etNum1, etNum2;
     View v;
@@ -52,6 +51,7 @@ public class ActivityReproductorVideos extends YouTubeBaseActivity implements
     StatsVideo statsVideo = new StatsVideo();
     int visitasMenor = 1000;
     int visitasMayor = 5000;
+    String idVideo;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,6 +62,7 @@ public class ActivityReproductorVideos extends YouTubeBaseActivity implements
         youTubePlayerView.initialize(claveYT, this);
         siguienteVideo=(Button)findViewById(R.id.btnSiguienteVideo);
         favorito=(Button)findViewById(R.id.btnFavoritos);
+        btnCompartir=(Button)findViewById(R.id.btnCompartir);
         tvNombreVideo=(TextView)findViewById(R.id.tvNombreVideo);
         tvNombreCanal=(TextView)findViewById(R.id.tvNombreCanal);
         tvFechaSubida=(TextView)findViewById(R.id.tvFecha);
@@ -221,6 +222,7 @@ public class ActivityReproductorVideos extends YouTubeBaseActivity implements
                     mostrarDatos();
                     youTubePlayer1.loadVideo(idVideo);
                     youTubePlayer1.play();
+                    video.setIdVideo(idVideo);
                     System.out.println("Numero de visitas video salida bucle(sacarJsonStats): " + visitas);
                 }
                 else{
@@ -255,6 +257,18 @@ public class ActivityReproductorVideos extends YouTubeBaseActivity implements
 
         sacarJsonInfoVideo(urlBuscarVideo);
         Toast.makeText(getApplicationContext(), "Buscando vídeo para reproducir... Puede demorarse, dependiendo de los criterios de búsqueda", Toast.LENGTH_LONG).show();
+    }
+
+    //Metodo pulsar boton
+    public void compartir(View v){
+        String id = video.getIdVideo();
+        String link = "https://www.youtube.com/watch?v=" + id;
+
+        Intent share=new Intent(Intent.ACTION_SEND);
+        share.setType("text/plain");
+        share.putExtra(Intent.EXTRA_SUBJECT, "Mira este vídeo!");
+        share.putExtra(Intent.EXTRA_TEXT, "Mira este vídeo! " + link);
+        startActivity(Intent.createChooser(share, "Compartir vía"));
     }
 
 //Fin Mis Metodos

@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Activity.ActivityRegistro">
+
+    <TextView
+        android:id="@+id/tvUsuario"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/etUsuario"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="24dp"
+        android:text="Usuario:"
+        android:textColor="@color/colorPrimary"
+        android:textSize="18sp"
+        android:layout_alignParentLeft="true"
+        android:layout_marginLeft="24dp" />
+
+    <EditText
+        android:id="@+id/etUsuario"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginEnd="19dp"
+        android:layout_marginTop="111dp"
+        android:ems="10"
+        android:hint="Nombre Usuario"
+        android:inputType="textPersonName"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="19dp" />
+
+    <TextView
+        android:id="@+id/tvPassword"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/editText3"
+        android:layout_alignStart="@+id/tvUsuario"
+        android:text="Contraseña:"
+        android:textColor="@color/colorPrimary"
+        android:textSize="18sp"
+        android:layout_alignLeft="@+id/tvUsuario" />
+
+    <EditText
+        android:id="@+id/etCorreoElectronico"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignStart="@+id/etUsuario"
+        android:layout_marginBottom="202dp"
+        android:ems="10"
+        android:hint="Correo Electónico"
+        android:inputType="textPersonName"
+        android:layout_alignLeft="@+id/etUsuario" />
+
+    <TextView
+        android:id="@+id/tvCorreo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/etCorreoElectronico"
+        android:layout_alignStart="@+id/tvUsuario"
+        android:text="Correo:"
+        android:textColor="@color/colorPrimary"
+        android:textSize="18sp"
+        android:layout_alignLeft="@+id/tvUsuario" />
+
+    <EditText
+        android:id="@+id/editText3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_alignStart="@+id/etUsuario"
+        android:layout_marginTop="190dp"
+        android:ems="10"
+        android:hint="Contraseña"
+        android:inputType="textPassword"
+        android:layout_alignLeft="@+id/etUsuario" />
+
+    <Button
+        android:id="@+id/btnCrearCuenta"
+        android:layout_width="175dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="91dp"
+        android:background="@drawable/boton_redondeado"
+        android:onClick="crearCuenta"
+        android:text="Crear Cuenta"
+        android:textColor="@android:color/background_light" />
+
+    <TextView
+        android:id="@+id/tvTitulo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="37dp"
+        android:text="Registro"
+        android:textColor="@color/colorPrimary"
+        android:textSize="30sp"
+        android:textStyle="bold" />
+</RelativeLayout>
