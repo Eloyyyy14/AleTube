@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
+    <TextView
+        android:id="@+id/tvInicio"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="24dp"
+        android:text="Configuración de visitas"
+        android:textColor="@color/colorPrimary"
+        android:textSize="22sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/tvPrimero"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_alignStart="@+id/tvSegundo"
+        android:layout_marginTop="109dp"
+        android:text="Número máximo de visitas"
+        android:textColor="@color/colorPrimary"
+        android:textSize="14sp" />
+
+    <EditText
+        android:id="@+id/etMaximo"
+        android:layout_width="111dp"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/tvPrimero"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginEnd="14dp"
+        android:layout_marginRight="14dp"
+        android:ems="10"
+        android:hint="Max visitas"
+        android:inputType="number" />
+
+    <TextView
+        android:id="@+id/tvSegundo"
+        android:layout_width="147dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="224dp"
+        android:text="Entre dos números"
+        android:textColor="@color/colorPrimary"
+        android:textSize="14sp"
+        android:layout_marginLeft="5dp" />
+
+    <EditText
+        android:id="@+id/etMaximo2"
+        android:layout_width="111dp"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/etMaximo"
+        android:layout_centerVertical="true"
+        android:ems="10"
+        android:hint="Max visitas"
+        android:inputType="number" />
+
+    <EditText
+        android:id="@+id/etMinimo"
+        android:layout_width="111dp"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/tvSegundo"
+        android:layout_alignStart="@+id/etMaximo"
+        android:layout_marginBottom="-224dp"
+        android:ems="10"
+        android:hint="Min visitas"
+        android:inputType="number" />
+
+    <LinearLayout
+        android:layout_width="359dp"
+        android:layout_height="64dp"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true">
+
+
+        <Button
+            android:id="@+id/btnCancelar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@drawable/boton_redondeado2"
+            android:text="Cancelar"
+            android:textColor="@android:color/background_light" />
+
+        <Button
+            android:id="@+id/btnGuardar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@drawable/boton_redondeado"
+            android:text="Guardar"
+            android:textColor="@android:color/background_light" />
+    </LinearLayout>
+
+</RelativeLayout>

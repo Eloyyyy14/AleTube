@@ -1,8 +1,10 @@
 package com.example.eloyyyyyyy.pruebasapiyoutube.Activity;
 
+import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
 
+import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -35,8 +37,7 @@ public class ActivityReproductorVideos extends YouTubeBaseActivity implements
         YouTubePlayer.OnInitializedListener{
 
     Button siguienteVideo, favorito, btnCompartir;
-    TextView tvNombreVideo, tvNombreCanal, tvFechaSubida, tvVisitas, tvExplicacion, tvNum1, tvNum2;
-    EditText etNum1, etNum2;
+    TextView tvNombreVideo, tvNombreCanal, tvFechaSubida, tvVisitas;
     View v;
 
     private String claveYT="AIzaSyD1ykwAYUodC9hA_kUrRRj7oCJXk8iPSYM";
@@ -49,9 +50,14 @@ public class ActivityReproductorVideos extends YouTubeBaseActivity implements
     ArrayList<StatsVideo> listStatsVideo = new ArrayList<StatsVideo>();
     Video video=new Video();
     StatsVideo statsVideo = new StatsVideo();
-    int visitasMenor = 1000;
-    int visitasMayor = 5000;
-    String idVideo;
+
+    //Para configurar vídeos con un máximo de visitas
+    int visitasMayorMayor = 0;
+    //De inicio saca vídeos entre 0-1000 millones
+    int visitasMenor = 0;
+    int visitasMayor = 1000000000;
+
+    boolean entreDosNumeros = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,16 +77,104 @@ public class ActivityReproductorVideos extends YouTubeBaseActivity implements
         siguienteVideo(v);
     }
 
-    //Metodo del menu
+    //Metodo del menu crear
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_reproductor, menu);
         return true;
     }
 
-    //Método del menú
+    //Método del menú click
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+        final AlertDialog.Builder dialog =  new AlertDialog.Builder(ActivityReproductorVideos.this);
+        final View dialogView = getLayoutInflater().inflate(R.layout.dialog_visitas, null);
+        TextView tvInicio = (TextView) dialogView.findViewById(R.id.tvInicio);
+        TextView tvPrimero = (TextView) dialogView.findViewById(R.id.tvPrimero);
+        TextView tvSegundo = (TextView) dialogView.findViewById(R.id.tvSegundo);
+        final EditText etMaximo = (EditText) dialogView.findViewById(R.id.etMaximo);
+        final EditText etMaximo2 = (EditText) dialogView.findViewById(R.id.etMaximo2);
+        final EditText etMinimo = (EditText) dialogView.findViewById(R.id.etMinimo);
+        Button btnCancelar = (Button) dialogView.findViewById(R.id.btnCancelar);
+        Button btnGuardar = (Button) dialogView.findViewById(R.id.btnGuardar);
+
+        dialog.setView(dialogView);
+        final AlertDialog dialog1 = dialog.create();
+        dialog1.show();
+
+        btnCancelar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog1.dismiss();
+            }
+        });
+
+        btnGuardar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //Si solo se escribe en el max(OPCION BUENA)!!!!!!
+                if(etMaximo.getText().length() != 0 && etMaximo2.getText().length() == 0 && etMinimo.getText().length() == 0){
+                    String mayor = etMaximo.getText().toString();
+
+                    visitasMayorMayor = Integer.parseInt(mayor);
+
+                    siguienteVideo(v);
+                    entreDosNumeros=false;
+                    Toast.makeText(getApplicationContext(), "Configuración: Número máximo guardada", Toast.LENGTH_LONG).show();
+                    dialog1.dismiss();
+                }
+                //Si se escribe entre dos num de visitas(OPCION BUENA)!!!!!!
+                else if(etMaximo.getText().length() == 0 && etMaximo2.getText().length() != 0 && etMinimo.getText().length() != 0){
+                    String mayor = etMaximo2.getText().toString();
+                    String menor = etMinimo.getText().toString();
+
+                    int may = Integer.parseInt(mayor);
+                    int men = Integer.parseInt(menor);
+
+                    if(men>may){
+                        Toast.makeText(getApplicationContext(), "El menor no puede ser más grande que el mayor", Toast.LENGTH_LONG).show();
+                    }
+
+                    else if(may==men){
+                        Toast.makeText(getApplicationContext(), "No pueden ser dos números iguales", Toast.LENGTH_LONG).show();
+                    }
+
+                    else {
+                        visitasMayor = Integer.parseInt(mayor);
+                        visitasMenor = Integer.parseInt(menor);
+
+                        siguienteVideo(v);
+                        entreDosNumeros = true;
+                        Toast.makeText(getApplicationContext(), "Configuración: Entre dos números guardada", Toast.LENGTH_LONG).show();
+                        dialog1.dismiss();
+                    }
+                }
+                //Si se escribe en max y en max2
+                else if(etMaximo.getText().length() != 0 && etMaximo2.getText().length() != 0 & etMinimo.getText().length() == 0){
+                    Toast.makeText(getApplicationContext(), "Escriba un número máximo o entre dos números", Toast.LENGTH_LONG).show();
+                }
+                //Si se escribe en max y en min
+                else if(etMaximo.getText().length() != 0 && etMaximo2.getText().length() == 0 & etMinimo.getText().length() != 0){
+                    Toast.makeText(getApplicationContext(), "Escriba un número máximo o entre dos números", Toast.LENGTH_LONG).show();
+                }
+                //Si no se escribe en ninguno
+                else if(etMaximo.getText().length() == 0 && etMaximo2.getText().length() == 0 && etMinimo.getText().length() == 0){
+                    Toast.makeText(getApplicationContext(), "No hay datos", Toast.LENGTH_LONG).show();
+                }
+                //Si se escribe en todos
+                else if(etMaximo.getText().length() != 0 && etMaximo2.getText().length() != 0 && etMinimo.getText().length() != 0){
+                    Toast.makeText(getApplicationContext(), "No escriba en todos", Toast.LENGTH_LONG).show();
+                }
+                //Si solo se escribe en el max2
+                else if(etMaximo.getText().length() == 0 && etMaximo2.getText().length() != 0 && etMinimo.getText().length() == 0){
+                    Toast.makeText(getApplicationContext(), "Escriba un número máximo o entre dos números", Toast.LENGTH_LONG).show();
+                }
+                //Si solo se escribe en el min
+                else if(etMaximo.getText().length() == 0 && etMaximo2.getText().length() == 0 && etMinimo.getText().length() != 0){
+                    Toast.makeText(getApplicationContext(), "Escriba un número máximo o entre dos números", Toast.LENGTH_LONG).show();
+                }
+            }
+        });
 
         return true;
     }
@@ -218,15 +312,27 @@ public class ActivityReproductorVideos extends YouTubeBaseActivity implements
                         siguienteVideo(v);
                     }
 
-                if(visitas <= visitasMayor && visitas >= visitasMenor) {
-                    mostrarDatos();
-                    youTubePlayer1.loadVideo(idVideo);
-                    youTubePlayer1.play();
-                    video.setIdVideo(idVideo);
-                    System.out.println("Numero de visitas video salida bucle(sacarJsonStats): " + visitas);
+                if(entreDosNumeros==true) {
+                    if (visitas <= visitasMayor && visitas >= visitasMenor) {
+                        mostrarDatos();
+                        youTubePlayer1.loadVideo(idVideo);
+                        youTubePlayer1.play();
+                        video.setIdVideo(idVideo);
+                        System.out.println("Numero de visitas video salida bucle(sacarJsonStats): " + visitas);
+                    } else {
+                        siguienteVideo(v);
+                    }
                 }
                 else{
+                    if (visitas <= visitasMayorMayor) {
+                        mostrarDatos();
+                        youTubePlayer1.loadVideo(idVideo);
+                        youTubePlayer1.play();
+                        video.setIdVideo(idVideo);
+                        System.out.println("Numero de visitas video salida bucle(sacarJsonStats): " + visitas);
+                    } else {
                         siguienteVideo(v);
+                    }
                 }
             }
         }, new Response.ErrorListener() {
@@ -266,8 +372,8 @@ public class ActivityReproductorVideos extends YouTubeBaseActivity implements
 
         Intent share=new Intent(Intent.ACTION_SEND);
         share.setType("text/plain");
-        share.putExtra(Intent.EXTRA_SUBJECT, "Mira este vídeo!");
-        share.putExtra(Intent.EXTRA_TEXT, "Mira este vídeo! " + link);
+        share.putExtra(Intent.EXTRA_SUBJECT, "Mira este vídeo de AleTube!");
+        share.putExtra(Intent.EXTRA_TEXT, "Mira este vídeo de AleTube! " + link);
         startActivity(Intent.createChooser(share, "Compartir vía"));
     }
 
