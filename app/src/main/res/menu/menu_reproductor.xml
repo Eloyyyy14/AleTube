@@ -3,6 +3,6 @@
 
     <item
         android:id="@+id/itemVisitas"
-        android:title="Configuración Visitas" />
+        android:title="@string/menu_reproductor" />
 
 </menu>

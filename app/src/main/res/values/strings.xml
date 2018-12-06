@@ -8,4 +8,41 @@
     <string name="nav_header_subtitle">android.studio@android.com</string>
     <string name="nav_header_desc">Navigation header</string>
     <string name="action_settings">Settings</string>
+
+    <string name="iniciar_sesion_iniciar_sesion">Iniciar Sesion</string>
+    <string name="iniciar_sesion_cancelar">Cancelar</string>
+    <string name="iniciar_sesion_usuario">Usuario</string>
+    <string name="iniciar_sesion_contraseña">Contraseña</string>
+
+    <string name="login_titulo">¿Te atreves con videos aleatorios?</string>
+    <string name="login_iniciar_sesion">Tengo una cuenta</string>
+    <string name="login_registro">Registrarme</string>
+
+    <string name="registro_titulo">Registro</string>
+    <string name="registro_usuario">Usuario:</string>
+    <string name="registro_etUsuario">Nombre Usuario</string>
+    <string name="registro_contraseña">Contraseña:</string>
+    <string name="registro_etContraseña">Contraseña</string>
+    <string name="registro_correo">Correo:</string>
+    <string name="registro_etCorreo">Correo Electónico</string>
+    <string name="registro_crear_cuenta">Crear Cuenta</string>
+
+    <string name="menulat_titulo">¿Qué es AleTube?</string>
+    <string name="menulat_explicacion1">AleTube es una aplicación pensada para ver vídeos totalmente aleatorios, con un número mínimo y máximo de visitas(seleccionado por el usuario).</string>
+    <string name="menulat_explicacion2">Además contiene la funcionalidad de añadir vídeos a favoritos para poder visualizarlos después.</string>
+
+    <string name="dialog_titulo">Filtros de Visualización</string>
+    <string name="dialog_max">Número máximo de visitas</string>
+    <string name="dialog_etMax">Max visitas</string>
+    <string name="dialog_maxmin">Entre dos números</string>
+    <string name="dialog_etMin">Min visitas</string>
+    <string name="diaog_textoTitulo">Buscar por título</string>
+    <string name="diaog_etTextoTitulo">Título vídeo</string>
+    <string name="dialog_cancelar">Cancelar</string>
+    <string name="diaog_guardar">Guardar</string>
+
+    <string name="menu_inicio_ajustes">Ajustes</string>
+    <string name="menu_inicio_salir">Salir</string>
+
+    <string name="menu_reproductor">Filtro de vídeos</string>
 </resources>

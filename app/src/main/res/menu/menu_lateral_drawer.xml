@@ -23,10 +23,6 @@
     <item android:title="Avanzado">
         <menu>
             <item
-                android:id="@+id/nav_ajustes"
-                android:icon="@drawable/iconoajustes"
-                android:title="Ajustes" />
-            <item
                 android:id="@+id/nav_compartir"
                 android:icon="@drawable/iconocompartir"
                 android:title="Compartir" />

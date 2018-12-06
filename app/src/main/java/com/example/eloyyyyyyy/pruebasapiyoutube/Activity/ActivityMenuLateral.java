@@ -2,6 +2,7 @@ package com.example.eloyyyyyyy.pruebasapiyoutube.Activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.preference.PreferenceActivity;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -10,11 +11,15 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.TextView;
 
 import com.example.eloyyyyyyy.pruebasapiyoutube.R;
 
 public class ActivityMenuLateral extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
+
+    String usuario;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,7 +27,6 @@ public class ActivityMenuLateral extends AppCompatActivity
         setContentView(R.layout.activity_menu_lateral);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -32,6 +36,13 @@ public class ActivityMenuLateral extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+        Intent intent = getIntent();
+        usuario = intent.getStringExtra("usuario");
+
+        View header = navigationView.getHeaderView(0);
+        TextView tvUser = (TextView) header.findViewById(R.id.tvUsuarioNav);
+        tvUser.setText(usuario);
     }
 
     @Override
@@ -57,9 +68,10 @@ public class ActivityMenuLateral extends AppCompatActivity
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.nav_ajustes) {
-            return true;
+        if (id == R.id.itemSalir) {
+            Intent salir=new Intent().setClass(ActivityMenuLateral.this, ActivityLogin.class);
+            salir.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+            startActivity(salir);
         }
 
         return super.onOptionsItemSelected(item);
@@ -72,19 +84,24 @@ public class ActivityMenuLateral extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.nav_inicio) {
-            Intent inicio=new Intent().setClass(ActivityMenuLateral.this, ActivityReproductorVideos.class);
-            startActivity(inicio);
+            Intent video=new Intent().setClass(ActivityMenuLateral.this, ActivityReproductorVideos.class);
+            startActivity(video);
 
         } else if (id == R.id.nav_favoritos) {
+            Intent fav=new Intent().setClass(ActivityMenuLateral.this, ActivityFavoritos.class);
+            startActivity(fav);
 
         } else if (id == R.id.nav_perfil) {
-
-        } else if (id == R.id.nav_ajustes) {
+            Intent perfil=new Intent().setClass(ActivityMenuLateral.this, ActivityPerfil.class);
+            perfil.putExtra("usuario", usuario);
+            startActivity(perfil);
 
         } else if (id == R.id.nav_compartir) {
 
         } else if (id == R.id.nav_salir) {
-
+            Intent salir=new Intent().setClass(ActivityMenuLateral.this, ActivityLogin.class);
+            salir.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+            startActivity(salir);
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);

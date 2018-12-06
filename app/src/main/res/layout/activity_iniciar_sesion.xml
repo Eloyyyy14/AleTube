@@ -13,7 +13,7 @@
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="69dp"
-        android:src="@drawable/imagenlogo" />
+        android:src="@drawable/imagenlogopng2" />
 
     <EditText
         android:id="@+id/etUsuario"
@@ -23,7 +23,7 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="179dp"
         android:ems="10"
-        android:hint="Usuario"
+        android:hint="@string/iniciar_sesion_usuario"
         android:inputType="textPersonName"
         android:textAllCaps="false" />
 
@@ -35,7 +35,7 @@
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="207dp"
         android:ems="10"
-        android:hint="Contraseña"
+        android:hint="@string/iniciar_sesion_contraseña"
         android:inputType="textPassword"
         android:textAllCaps="false" />
 
@@ -48,7 +48,7 @@
         android:layout_marginBottom="122dp"
         android:background="@drawable/boton_redondeado"
         android:onClick="iniciarSesion"
-        android:text="Iniciar Sesion"
+        android:text="@string/iniciar_sesion_iniciar_sesion"
         android:textColor="@android:color/background_light" />
 
     <Button
@@ -60,6 +60,6 @@
         android:layout_marginBottom="55dp"
         android:background="@drawable/boton_redondeado2"
         android:onClick="cancelar"
-        android:text="Cancelar"
+        android:text="@string/iniciar_sesion_cancelar"
         android:textColor="@android:color/background_light" />
 </RelativeLayout>

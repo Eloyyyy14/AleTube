@@ -15,7 +15,7 @@
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="22dp"
-        app:srcCompat="@drawable/imagenlogo" />
+        app:srcCompat="@drawable/imagenlogopng2" />
 
     <TextView
         android:id="@+id/tvTitulo"
@@ -24,7 +24,7 @@
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="120dp"
-        android:text="¿Qué es AleTube?"
+        android:text="@string/menulat_titulo"
         android:textColor="@color/colorPrimary"
         android:textSize="24sp"
         android:textStyle="bold" />
@@ -38,7 +38,7 @@
         android:layout_centerVertical="true"
         android:layout_marginLeft="11dp"
         android:layout_marginStart="11dp"
-        android:text="AleTube es una aplicación pensada para ver vídeos totalmente aleatorios, con un número mínimo y máximo de visitas(seleccionado por el usuario). "
+        android:text="@string/menulat_explicacion1"
         android:textColor="@color/colorPrimary"
         android:textSize="20sp" />
 
@@ -52,7 +52,7 @@
         android:layout_marginBottom="94dp"
         android:layout_marginLeft="13dp"
         android:layout_marginStart="13dp"
-        android:text="Además contiene la funcionalidad de añadir vídeos a favoritos para poder visualizarlos después."
+        android:text="@string/menulat_explicacion2"
         android:textColor="@color/colorPrimary"
         android:textSize="20sp" />
 </RelativeLayout>

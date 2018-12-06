@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Activity.ActivityPerfil">
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="331dp"
+        android:layout_height="89dp"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="15dp"
+        android:src="@drawable/imagenlogopng2" />
+
+    <TextView
+        android:id="@+id/tvUser"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignTop="@+id/tvUser2"
+        android:layout_marginEnd="80dp"
+        android:text="User"
+        android:textColor="@color/colorPrimary"
+        android:textSize="18sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/tvUser2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_alignStart="@+id/imageView"
+        android:layout_marginTop="142dp"
+        android:text="Nombre de Usuario:"
+        android:textColor="@color/colorPrimary"
+        android:textSize="18sp" />
+
+    <TextView
+        android:id="@+id/tvCorreo2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_alignStart="@+id/imageView"
+        android:layout_marginTop="201dp"
+        android:text="Correo vinculado:"
+        android:textColor="@color/colorPrimary"
+        android:textSize="18sp" />
+
+    <TextView
+        android:id="@+id/tvCorreo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignEnd="@+id/etPassAc"
+        android:layout_alignTop="@+id/tvCorreo2"
+        android:text="Correo"
+        android:textColor="@color/colorPrimary"
+        android:textSize="16sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/tvEx"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="229dp"
+        android:text="Cambiar contraseña"
+        android:textColor="@color/colorPrimary"
+        android:textSize="20sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/tvAntigua"
+        android:layout_width="166dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignStart="@+id/imageView"
+        android:layout_marginBottom="157dp"
+        android:text="Contraseña Actual:"
+        android:textColor="@color/colorPrimary"
+        android:textSize="18sp" />
+
+    <TextView
+        android:id="@+id/tvNueva"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignStart="@+id/imageView"
+        android:layout_marginBottom="101dp"
+        android:text="Nueva contraseña:"
+        android:textColor="@color/colorPrimary"
+        android:textSize="18sp" />
+
+    <Button
+        android:id="@+id/btnGuardar"
+        android:layout_width="156dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="22dp"
+        android:background="@drawable/boton_redondeado"
+        android:onClick="guardarCambios"
+        android:text="Guardar Cambios"
+        android:textColor="@android:color/background_light" />
+
+    <EditText
+        android:id="@+id/etPassAc"
+        android:layout_width="152dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginBottom="144dp"
+        android:layout_marginEnd="16dp"
+        android:ems="10"
+        android:hint="Actual"
+        android:inputType="textPassword" />
+
+    <EditText
+        android:id="@+id/etPassNueva"
+        android:layout_width="152dp"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/tvNueva"
+        android:layout_alignEnd="@+id/etPassAc"
+        android:ems="10"
+        android:hint="Nueva"
+        android:inputType="textPassword" />
+
+</RelativeLayout>

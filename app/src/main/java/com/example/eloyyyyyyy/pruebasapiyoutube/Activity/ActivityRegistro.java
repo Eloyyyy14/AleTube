@@ -1,5 +1,6 @@
 package com.example.eloyyyyyyy.pruebasapiyoutube.Activity;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -7,6 +8,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.eloyyyyyyy.pruebasapiyoutube.R;
 
@@ -24,7 +26,7 @@ public class ActivityRegistro extends AppCompatActivity {
 
         ivLogo=(ImageView)findViewById(R.id.ivLogo);
         tvTitulo=(TextView)findViewById(R.id.tvTitulo);
-        tvUsuario=(TextView)findViewById(R.id.tvUsuario);
+        tvUsuario=(TextView)findViewById(R.id.tvUsuarioNav);
         tvPassword=(TextView)findViewById(R.id.tvPassword);
         tvCorreoElectronico=(TextView)findViewById(R.id.tvCorreo);
         etUsuario=(EditText) findViewById(R.id.etUsuario);
@@ -34,6 +36,10 @@ public class ActivityRegistro extends AppCompatActivity {
     }
 
     public void crearCuenta(View v){
+        Intent i = new Intent(ActivityRegistro.this, ActivityIniciarSesion.class);
+        finish();
+        startActivity(i);
 
+        Toast.makeText(getApplicationContext(), "Cuenta creada con éxito", Toast.LENGTH_LONG).show();
     }
 }

@@ -11,13 +11,14 @@
 
     <application
         android:allowBackup="true"
-        android:icon="@drawable/imagenlogo"
+        android:icon="@drawable/imagenlogoinicial2"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:screenOrientation="portrait"
         android:supportsRtl="true">
         <activity
             android:name=".Activity.SplashScreen"
+            android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -31,13 +32,28 @@
         <activity
             android:name=".Activity.ActivityMenuLateral"
             android:label="AleTube"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".Activity.ActivityLogin"
             android:label="AleTube"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".Activity.ActivityIniciarSesion" />
-        <activity android:name=".Activity.ActivityRegistro"></activity>
+        <activity
+            android:name=".Activity.ActivityIniciarSesion"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".Activity.ActivityRegistro"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".Activity.ActivityFavoritos"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme" />
+        <activity android:name=".Activity.ActivityPerfil"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme" />
     </application>
 
 </manifest>

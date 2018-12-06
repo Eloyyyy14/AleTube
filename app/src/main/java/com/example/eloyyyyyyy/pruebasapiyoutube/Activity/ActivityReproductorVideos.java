@@ -1,9 +1,12 @@
 package com.example.eloyyyyyyy.pruebasapiyoutube.Activity;
 
+//region Imports
+
 import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
 
+import android.os.StrictMode;
 import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -33,8 +36,12 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.Random;
 
+//endregion
+
 public class ActivityReproductorVideos extends YouTubeBaseActivity implements
-        YouTubePlayer.OnInitializedListener{
+        YouTubePlayer.OnInitializedListener, YouTubePlayer.OnFullscreenListener{
+
+//region Creacion Variables
 
     Button siguienteVideo, favorito, btnCompartir;
     TextView tvNombreVideo, tvNombreCanal, tvFechaSubida, tvVisitas;
@@ -43,22 +50,40 @@ public class ActivityReproductorVideos extends YouTubeBaseActivity implements
     private String claveYT="AIzaSyD1ykwAYUodC9hA_kUrRRj7oCJXk8iPSYM";
     private YouTubePlayerView youTubePlayerView;
     private YouTubePlayer youTubePlayer1;
+
     //private String idVideo="DRS_PpOrUZ4"; //https://www.youtube.com/watch?v=azxDhcKYku4
     //private String urlInfoVideo="https://www.googleapis.com/youtube/v3/videos?part=id%2Csnippet&id="+idVideo+"&key="+claveYT;
     //private String urlStatsVideo="https://www.googleapis.com/youtube/v3/videos?part=statistics&id="+idVideo+"&key="+claveYT;
+
     ArrayList<Video> listVideo = new ArrayList<Video>();
     ArrayList<StatsVideo> listStatsVideo = new ArrayList<StatsVideo>();
     Video video=new Video();
     StatsVideo statsVideo = new StatsVideo();
 
+    //ArrayList para guardar info de vídeo, ya que con el ArrayList de los objetos de la clase no funciona (No tiene sentido)
+    ArrayList<String> listaIdVideo = new ArrayList<String>();
+    ArrayList<String> listaTitulo = new ArrayList<String>();
+    ArrayList<String> listaNombreCanal = new ArrayList<String>();
+    ArrayList<String> listaDiaSubida = new ArrayList<String>();
+
     //Para configurar vídeos con un máximo de visitas
-    int visitasMayorMayor = 0;
+    int visitasSoloMayor = 0;
     //De inicio saca vídeos entre 0-1000 millones
     int visitasMenor = 0;
     int visitasMayor = 1000000000;
+    //Título del vídeo a buscar
+    String texto="";
 
+    //Boolean para por si se busca entre dos numeros
     boolean entreDosNumeros = true;
+    //Boolean para por si se busca numero max
+    boolean numeroMax = false;
+    //Boolean por si se busca texto
+    boolean textoEscrito = false;
 
+//endregion
+
+//region OnCreate
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -74,10 +99,26 @@ public class ActivityReproductorVideos extends YouTubeBaseActivity implements
         tvFechaSubida=(TextView)findViewById(R.id.tvFecha);
         tvVisitas=(TextView)findViewById(R.id.tvVisitas);
 
-        siguienteVideo(v);
+        //Compruebo si vengo de la activity Favoritos y recupero el id del video pulsado
+
+        Intent intent = getIntent();
+        String idVideo = intent.getStringExtra("idVideo");
+
+        //Si no es nulo es que venimos de esa activiy
+        if(idVideo != null){
+            String urlBuscarVideo="https://www.googleapis.com/youtube/v3/search?part=id,snippet&maxResults=1&type=video&q="+idVideo+"&key="+claveYT;
+            sacarJsonInfoVideo(urlBuscarVideo);
+        }
+
+        else {
+            siguienteVideo(v);
+        }
     }
 
-    //Metodo del menu crear
+//endregion
+
+//region Métodos Relacionados Con El Menú
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_reproductor, menu);
@@ -95,6 +136,7 @@ public class ActivityReproductorVideos extends YouTubeBaseActivity implements
         final EditText etMaximo = (EditText) dialogView.findViewById(R.id.etMaximo);
         final EditText etMaximo2 = (EditText) dialogView.findViewById(R.id.etMaximo2);
         final EditText etMinimo = (EditText) dialogView.findViewById(R.id.etMinimo);
+        final EditText etTexto =(EditText) dialogView.findViewById(R.id.etTexto);
         Button btnCancelar = (Button) dialogView.findViewById(R.id.btnCancelar);
         Button btnGuardar = (Button) dialogView.findViewById(R.id.btnGuardar);
 
@@ -113,18 +155,19 @@ public class ActivityReproductorVideos extends YouTubeBaseActivity implements
             @Override
             public void onClick(View v) {
                 //Si solo se escribe en el max(OPCION BUENA)!!!!!!
-                if(etMaximo.getText().length() != 0 && etMaximo2.getText().length() == 0 && etMinimo.getText().length() == 0){
+                if(etMaximo.getText().length() != 0 && etMaximo2.getText().length() == 0 && etMinimo.getText().length() == 0 && etTexto.getText().length() == 0){
                     String mayor = etMaximo.getText().toString();
+                    visitasSoloMayor = Integer.parseInt(mayor);
 
-                    visitasMayorMayor = Integer.parseInt(mayor);
+                    entreDosNumeros = false;
+                    numeroMax = true;
 
                     siguienteVideo(v);
-                    entreDosNumeros=false;
                     Toast.makeText(getApplicationContext(), "Configuración: Número máximo guardada", Toast.LENGTH_LONG).show();
                     dialog1.dismiss();
                 }
                 //Si se escribe entre dos num de visitas(OPCION BUENA)!!!!!!
-                else if(etMaximo.getText().length() == 0 && etMaximo2.getText().length() != 0 && etMinimo.getText().length() != 0){
+                else if(etMaximo.getText().length() == 0 && etMaximo2.getText().length() != 0 && etMinimo.getText().length() != 0 && etTexto.getText().length() == 0){
                     String mayor = etMaximo2.getText().toString();
                     String menor = etMinimo.getText().toString();
 
@@ -143,12 +186,28 @@ public class ActivityReproductorVideos extends YouTubeBaseActivity implements
                         visitasMayor = Integer.parseInt(mayor);
                         visitasMenor = Integer.parseInt(menor);
 
-                        siguienteVideo(v);
                         entreDosNumeros = true;
+                        numeroMax = false;
+
+                        siguienteVideo(v);
                         Toast.makeText(getApplicationContext(), "Configuración: Entre dos números guardada", Toast.LENGTH_LONG).show();
                         dialog1.dismiss();
                     }
                 }
+                //Si solo se escribe texto a buscar(OPCION BUENA)!!!!!!
+                else if(etMaximo.getText().length() == 0 && etMaximo2.getText().length() == 0 && etMinimo.getText().length() == 0 && etTexto.getText().length() != 0){
+                    texto = etTexto.getText().toString();
+
+                    textoEscrito = true;
+                    entreDosNumeros = false;
+                    numeroMax = false;
+
+                    System.out.println(texto);
+                    siguienteVideo(v);
+                    Toast.makeText(getApplicationContext(), "Configuración: Buscar Titulo guardada", Toast.LENGTH_LONG).show();
+                    dialog1.dismiss();
+                }
+
                 //Si se escribe en max y en max2
                 else if(etMaximo.getText().length() != 0 && etMaximo2.getText().length() != 0 & etMinimo.getText().length() == 0){
                     Toast.makeText(getApplicationContext(), "Escriba un número máximo o entre dos números", Toast.LENGTH_LONG).show();
@@ -158,11 +217,11 @@ public class ActivityReproductorVideos extends YouTubeBaseActivity implements
                     Toast.makeText(getApplicationContext(), "Escriba un número máximo o entre dos números", Toast.LENGTH_LONG).show();
                 }
                 //Si no se escribe en ninguno
-                else if(etMaximo.getText().length() == 0 && etMaximo2.getText().length() == 0 && etMinimo.getText().length() == 0){
+                else if(etMaximo.getText().length() == 0 && etMaximo2.getText().length() == 0 && etMinimo.getText().length() == 0 && etTexto.getText().length() == 0){
                     Toast.makeText(getApplicationContext(), "No hay datos", Toast.LENGTH_LONG).show();
                 }
                 //Si se escribe en todos
-                else if(etMaximo.getText().length() != 0 && etMaximo2.getText().length() != 0 && etMinimo.getText().length() != 0){
+                else if(etMaximo.getText().length() != 0 && etMaximo2.getText().length() != 0 && etMinimo.getText().length() != 0 && etTexto.getText().length() != 0){
                     Toast.makeText(getApplicationContext(), "No escriba en todos", Toast.LENGTH_LONG).show();
                 }
                 //Si solo se escribe en el max2
@@ -179,8 +238,9 @@ public class ActivityReproductorVideos extends YouTubeBaseActivity implements
         return true;
     }
 
-//-----------------------------------------------------------------------------------------------------------------------------
-//Mis Metodos
+//endregion
+
+//region Método Sacar Valores Aleatorios
 
     //Saco 5 caracteres aleatorios para hacer una búsqueda de vídeos que contengan un id de video con esos caracteres
     public String obtenerRandomIdVideo(){
@@ -215,7 +275,10 @@ public class ActivityReproductorVideos extends YouTubeBaseActivity implements
         return id;
     }
 
-    //Sacar datos de video del json
+//endregion
+
+//region Método Sacar Información De Vídeos
+
     public void sacarJsonInfoVideo(String url){
 
         RequestQueue request = Volley.newRequestQueue(this);
@@ -262,13 +325,87 @@ public class ActivityReproductorVideos extends YouTubeBaseActivity implements
 
                     String urlStatsVideo="https://www.googleapis.com/youtube/v3/videos?part=statistics&id="+idVideos+"&key="+claveYT;
 
-                    sacarJsonStats(urlStatsVideo, idVideos);
+                    sacarJsonStats(urlStatsVideo, idVideos, 0);
 
-                    /*
-                    tvNombreVideo.setText(listVideo.get(0).getTitulo());
-                    tvNombreCanal.setText(listVideo.get(0).getNombreCanal());
-                    tvFechaSubida.setText(listVideo.get(0).getDiaSubida());
-                    */
+                } catch (Exception e) {
+                    siguienteVideo(v);
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                siguienteVideo(v);
+            }
+        });
+
+        request.add(jsonObjectRequest);
+        listVideo.clear();
+    }
+
+
+//endregion
+
+//region Método Sacar Informacion De Vídeos Si Se Busca Por Título
+
+    public void sacarJsonInfoVideoTitulo(String url){
+
+        RequestQueue request = Volley.newRequestQueue(this);
+
+        JsonObjectRequest jsonObjectRequest=new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+
+                try {
+                    JSONObject jsonObject = new JSONObject(response.toString(0));
+
+                    JSONArray jsonArray=jsonObject.getJSONArray("items");
+
+                    for(int i=0; i<jsonArray.length(); i++){
+                        String idVideo=jsonArray.getJSONObject(i).getJSONObject("id").getString("videoId");
+                        video.setIdVideo(idVideo);
+                        listaIdVideo.add(idVideo);
+
+                        String tituloVideo=jsonArray.getJSONObject(i).getJSONObject("snippet").getString("title");
+                        video.setTitulo(tituloVideo);
+                        listaTitulo.add(tituloVideo);
+
+                        String fechaSubida=jsonArray.getJSONObject(i).getJSONObject("snippet").getString("publishedAt");
+                        String FfechaSubida=fechaSubida.substring(0, 10);
+
+                        //Fecha bonita
+                        String fechaAnno = FfechaSubida.substring(0, 4);
+                        String fechaMes = FfechaSubida.substring(5, 7);
+                        String fechaDia = FfechaSubida.substring(8, 10);
+
+                        String fechaFinal= fechaDia + "/" + fechaMes + "/" + fechaAnno;
+
+                        video.setDiaSubida(fechaFinal);
+                        listaDiaSubida.add(fechaFinal);
+
+                        String nombreCanal=jsonArray.getJSONObject(i).getJSONObject("snippet").getString("channelTitle");
+                        video.setNombreCanal(nombreCanal);
+                        listaNombreCanal.add(nombreCanal);
+
+                        String miniatura=jsonArray.getJSONObject(i).getJSONObject("snippet").getJSONObject("thumbnails").getJSONObject("default").getString("url");
+                        video.setMiniatura(miniatura);
+
+                        listVideo.add(video);
+                    }
+                    int a = listVideo.size();
+                    int b = listaTitulo.size();
+                    int c = listaNombreCanal.size();
+                    int d = listaIdVideo.size();
+                    int e = listaDiaSubida.size();
+
+                    int indiceAleatorio = new Random().nextInt(listaIdVideo.size());
+                    String idVideos=listaIdVideo.get(indiceAleatorio);
+
+                    System.out.println("Id a reproducir YA(sacarJsonInfoVideoTitulo): "+ idVideos);
+
+                    String urlStatsVideo="https://www.googleapis.com/youtube/v3/videos?part=statistics&id="+idVideos+"&key="+claveYT;
+
+                    sacarJsonStats(urlStatsVideo, idVideos, indiceAleatorio);
+
                 } catch (Exception e) {
                     siguienteVideo(v);
                 }
@@ -283,8 +420,12 @@ public class ActivityReproductorVideos extends YouTubeBaseActivity implements
         request.add(jsonObjectRequest);
     }
 
-    //Sacar datos de estadisticas json a partir de una url y una idVideo para reproducir
-    public void sacarJsonStats(String url, final String idVideo){
+//endregion
+
+//region Método Sacar Visitas Del Vídeo
+
+    public void sacarJsonStats(String url, final String idVideo, final int indice){
+
         RequestQueue request = Volley.newRequestQueue(this);
         JsonObjectRequest jsonObjectRequest=new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
             @Override
@@ -302,8 +443,6 @@ public class ActivityReproductorVideos extends YouTubeBaseActivity implements
                             listStatsVideo.add(statsVideo);
                         }
 
-                        //tvVisitas.setText(listStatsVideo.get(0).getVisitas() + " visitas");
-
                         String visitasS = statsVideo.getVisitas();
                         visitas=Integer.parseInt(visitasS);
                         System.out.println("Numero de visitas video dentro bucle(sacarJsonStats): " + visitas);
@@ -312,27 +451,38 @@ public class ActivityReproductorVideos extends YouTubeBaseActivity implements
                         siguienteVideo(v);
                     }
 
-                if(entreDosNumeros==true) {
+                //Si el filtro es entre dos números
+                if(entreDosNumeros == true && numeroMax == false) {
                     if (visitas <= visitasMayor && visitas >= visitasMenor) {
                         mostrarDatos();
                         youTubePlayer1.loadVideo(idVideo);
                         youTubePlayer1.play();
                         video.setIdVideo(idVideo);
-                        System.out.println("Numero de visitas video salida bucle(sacarJsonStats): " + visitas);
+                        System.out.println("Numero de visitas video salida bucle(sacarJsonStats) dos números y no se ha escrito texto: " + visitas);
                     } else {
                         siguienteVideo(v);
                     }
                 }
-                else{
-                    if (visitas <= visitasMayorMayor) {
+                //Si el filtro es numero max y no se ha escrito texto
+                else if (entreDosNumeros == false && numeroMax == true){
+                    if (visitas <= visitasSoloMayor) {
                         mostrarDatos();
                         youTubePlayer1.loadVideo(idVideo);
                         youTubePlayer1.play();
                         video.setIdVideo(idVideo);
-                        System.out.println("Numero de visitas video salida bucle(sacarJsonStats): " + visitas);
-                    } else {
+                        System.out.println("Numero de visitas video salida bucle(sacarJsonStats) numero max y no se ha escrito texto: " + visitas);
+                    }
+                    else {
                         siguienteVideo(v);
                     }
+                }
+                //Si el filtro es solo texto
+                else if(entreDosNumeros == false  && numeroMax == false && textoEscrito == true){
+                    mostrarDatosTexto(indice);
+                    youTubePlayer1.loadVideo(idVideo);
+                    youTubePlayer1.play();
+                    video.setIdVideo(idVideo);
+                    System.out.println("Numero de visitas video salida bucle(sacarJsonStats)solo texto: " + visitas);
                 }
             }
         }, new Response.ErrorListener() {
@@ -343,7 +493,12 @@ public class ActivityReproductorVideos extends YouTubeBaseActivity implements
         });
 
         request.add(jsonObjectRequest);
+        listStatsVideo.clear();
     }
+
+//endregion
+
+//region Método Mostrar Datos En Los TextView
 
     public void mostrarDatos(){
         tvNombreVideo.setText(listVideo.get(0).getTitulo());
@@ -353,19 +508,63 @@ public class ActivityReproductorVideos extends YouTubeBaseActivity implements
         tvVisitas.setText(listStatsVideo.get(0).getVisitas() + " visitas");
     }
 
-    //Metodo al pulsar el botón
-    public void siguienteVideo(View v){
+//endregion
 
-        String idVideo=obtenerRandomIdVideo();
-        System.out.println("Id URL(siguienteVideo): "+idVideo);
+//region Método Mostrar Datos En Los TextView Si Se Busca Por Texto
 
-        String urlBuscarVideo="https://www.googleapis.com/youtube/v3/search?part=id,snippet&maxResults=5&type=video&q="+idVideo+"&key="+claveYT;
+    public void mostrarDatosTexto(int indice){
+        tvNombreVideo.setText(listaTitulo.get(indice));
+        tvNombreCanal.setText(listaNombreCanal.get(indice));
+        tvFechaSubida.setText(listaDiaSubida.get(indice));
 
-        sacarJsonInfoVideo(urlBuscarVideo);
-        Toast.makeText(getApplicationContext(), "Buscando vídeo para reproducir... Puede demorarse, dependiendo de los criterios de búsqueda", Toast.LENGTH_LONG).show();
+        tvVisitas.setText(listStatsVideo.get(0).getVisitas() + " visitas");
     }
 
-    //Metodo pulsar boton
+//endregion
+
+//region Método Pulsar El Botón De SiguienteVídeo
+
+    public void siguienteVideo(View v){
+
+        if(texto.length() != 0){
+
+            String urlBuscarVideo="https://www.googleapis.com/youtube/v3/search?part=id,snippet&maxResults=50&type=video&q="+texto+"&key="+claveYT;
+            sacarJsonInfoVideoTitulo(urlBuscarVideo);
+            System.out.println("aaaaaa "+urlBuscarVideo);
+        }
+
+        else {
+            String idVideo=obtenerRandomIdVideo();
+
+            String urlBuscarVideo="https://www.googleapis.com/youtube/v3/search?part=id,snippet&maxResults=5&type=video&q="+idVideo+"&key="+claveYT;
+            sacarJsonInfoVideo(urlBuscarVideo);
+        }
+
+        if(entreDosNumeros == false  && numeroMax == false && textoEscrito == true){
+            if(listaIdVideo.size() != 0){
+                /*
+                int indiceAleatorio = new Random().nextInt(listaIdVideo.size());
+                String idVideo=listaIdVideo.get(indiceAleatorio);
+
+                mostrarDatosTexto(indiceAleatorio);
+                youTubePlayer1.loadVideo(idVideo);
+                youTubePlayer1.play();
+                video.setIdVideo(idVideo);
+                */
+            }
+            else{
+                String urlBuscarVideo="https://www.googleapis.com/youtube/v3/search?part=id,snippet&maxResults=50&type=video&q="+texto+"&key="+claveYT;
+                sacarJsonInfoVideoTitulo(urlBuscarVideo);
+            }
+        }
+
+        Toast.makeText(getApplicationContext(), "Buscando vídeo para reproducir... Puede tardar, dependiendo de los criterios de búsqueda", Toast.LENGTH_LONG).show();
+    }
+
+//endregion
+
+//region Método Pulsar El Botón De Compartir
+
     public void compartir(View v){
         String id = video.getIdVideo();
         String link = "https://www.youtube.com/watch?v=" + id;
@@ -377,8 +576,17 @@ public class ActivityReproductorVideos extends YouTubeBaseActivity implements
         startActivity(Intent.createChooser(share, "Compartir vía"));
     }
 
-//Fin Mis Metodos
-//------------------------------------------------------------------------------------------------------------
+//endregion
+
+//region Método Pulsar El Botón De Favorito
+
+    public void favorito(View v){
+
+    }
+
+//endregion
+
+//region Métodos De La API De YouTube
 
     //Método para comprobar si fue bien
     @Override
@@ -388,9 +596,8 @@ public class ActivityReproductorVideos extends YouTubeBaseActivity implements
         if(!b){
             youTubePlayer1=youTubePlayer;
             youTubePlayer1.setPlayerStyle(YouTubePlayer.PlayerStyle.DEFAULT);
-
-            //Carga y reproduce directamente el video
-
+            //Al girar el móvil se pone auto en pantalla completa
+            youTubePlayer1.addFullscreenControlFlag(YouTubePlayer.FULLSCREEN_FLAG_ALWAYS_FULLSCREEN_IN_LANDSCAPE);
         }
     }
 
@@ -419,4 +626,11 @@ public class ActivityReproductorVideos extends YouTubeBaseActivity implements
         return youTubePlayerView;
     }
 
+    //Pendiente esto
+    @Override
+    public void onFullscreen(boolean b) {
+
+    }
+
+//endregion
 }

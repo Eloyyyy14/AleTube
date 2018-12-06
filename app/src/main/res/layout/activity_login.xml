@@ -13,7 +13,7 @@
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="55dp"
-        app:srcCompat="@drawable/imagenlogo" />
+        app:srcCompat="@drawable/imagenlogopng2" />
 
     <TextView
         android:id="@+id/tvInicio"
@@ -22,7 +22,7 @@
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="145dp"
-        android:text="¿Te atreves con videos aleatorios?"
+        android:text="@string/login_titulo"
         android:textColor="@color/colorPrimary"
         android:textSize="30sp"
         android:textStyle="italic" />
@@ -36,7 +36,7 @@
         android:layout_marginBottom="173dp"
         android:background="@drawable/boton_redondeado"
         android:onClick="login"
-        android:text="Tengo una cuenta"
+        android:text="@string/login_iniciar_sesion"
         android:textColor="@android:color/background_light" />
 
     <Button
@@ -48,6 +48,6 @@
         android:layout_marginBottom="81dp"
         android:background="@drawable/boton_redondeado"
         android:onClick="registro"
-        android:text="Registrarme"
+        android:text="@string/login_registro"
         android:textColor="@android:color/background_light" />
 </RelativeLayout>

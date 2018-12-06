@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-
 
     <TextView
         android:id="@+id/tvInicio"
@@ -11,22 +12,22 @@
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="24dp"
-        android:text="Configuración de visitas"
+        android:layout_marginTop="23dp"
+        android:text="@string/dialog_titulo"
         android:textColor="@color/colorPrimary"
-        android:textSize="22sp"
+        android:textSize="24sp"
         android:textStyle="bold" />
 
     <TextView
         android:id="@+id/tvPrimero"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
-        android:layout_alignStart="@+id/tvSegundo"
-        android:layout_marginTop="109dp"
-        android:text="Número máximo de visitas"
+        android:layout_marginTop="85dp"
+        android:text="@string/dialog_max"
         android:textColor="@color/colorPrimary"
-        android:textSize="14sp" />
+        android:layout_alignParentLeft="true" />
 
     <EditText
         android:id="@+id/etMaximo"
@@ -34,69 +35,96 @@
         android:layout_height="wrap_content"
         android:layout_alignBaseline="@+id/tvPrimero"
         android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="true"
-        android:layout_marginEnd="14dp"
-        android:layout_marginRight="14dp"
         android:ems="10"
-        android:hint="Max visitas"
-        android:inputType="number" />
-
-    <TextView
-        android:id="@+id/tvSegundo"
-        android:layout_width="147dp"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_marginTop="224dp"
-        android:text="Entre dos números"
-        android:textColor="@color/colorPrimary"
-        android:textSize="14sp"
-        android:layout_marginLeft="5dp" />
-
-    <EditText
-        android:id="@+id/etMaximo2"
-        android:layout_width="111dp"
-        android:layout_height="wrap_content"
-        android:layout_alignStart="@+id/etMaximo"
-        android:layout_centerVertical="true"
-        android:ems="10"
-        android:hint="Max visitas"
-        android:inputType="number" />
+        android:hint="@string/dialog_etMax"
+        android:inputType="number"
+        android:layout_alignParentRight="true" />
 
     <EditText
         android:id="@+id/etMinimo"
         android:layout_width="111dp"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/tvSegundo"
-        android:layout_alignStart="@+id/etMaximo"
-        android:layout_marginBottom="-224dp"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="151dp"
         android:ems="10"
-        android:hint="Min visitas"
-        android:inputType="number" />
+        android:hint="@string/dialog_etMin"
+        android:inputType="number"
+        android:layout_alignParentRight="true" />
+
+    <TextView
+        android:id="@+id/tvSegundo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/etMinimo"
+        android:text="@string/dialog_maxmin"
+        android:textColor="@color/colorPrimary"
+        android:layout_alignParentLeft="true" />
+
+    <EditText
+        android:id="@+id/etMaximo2"
+        android:layout_width="111dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_below="@+id/tvSegundo"
+        android:ems="10"
+        android:hint="@string/dialog_etMax"
+        android:inputType="number"
+        android:layout_alignParentRight="true" />
+
+    <TextView
+        android:id="@+id/tvTexto"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/etTexto"
+        android:layout_alignParentStart="true"
+        android:text="@string/diaog_textoTitulo"
+        android:textColor="@color/colorPrimary"
+        android:layout_alignParentLeft="true" />
+
+    <EditText
+        android:id="@+id/etTexto"
+        android:layout_width="173dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_below="@id/etMaximo2"
+        android:layout_marginTop="20dp"
+        android:ems="10"
+        android:hint="@string/diaog_etTextoTitulo"
+        android:inputType="textPersonName" />
 
     <LinearLayout
-        android:layout_width="359dp"
-        android:layout_height="64dp"
+        android:layout_width="286dp"
+        android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true">
 
-
         <Button
             android:id="@+id/btnCancelar"
-            android:layout_width="wrap_content"
+            android:layout_width="140dp"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="19dp"
+            android:layout_toLeftOf="@+id/etTexto"
+            android:layout_toStartOf="@+id/etTexto"
             android:background="@drawable/boton_redondeado2"
-            android:text="Cancelar"
+            android:text="@string/iniciar_sesion_cancelar"
             android:textColor="@android:color/background_light" />
 
         <Button
             android:id="@+id/btnGuardar"
-            android:layout_width="wrap_content"
+            android:layout_width="140dp"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignTop="@+id/btnCancelar"
+            android:layout_marginEnd="9dp"
+            android:layout_marginRight="9dp"
             android:background="@drawable/boton_redondeado"
-            android:text="Guardar"
+            android:text="@string/diaog_guardar"
             android:textColor="@android:color/background_light" />
+
     </LinearLayout>
 
 </RelativeLayout>
