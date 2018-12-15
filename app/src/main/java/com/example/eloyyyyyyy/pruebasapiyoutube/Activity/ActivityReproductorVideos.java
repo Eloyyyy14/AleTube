@@ -541,18 +541,7 @@ public class ActivityReproductorVideos extends YouTubeBaseActivity implements
         }
 
         if(entreDosNumeros == false  && numeroMax == false && textoEscrito == true){
-            if(listaIdVideo.size() != 0){
-                /*
-                int indiceAleatorio = new Random().nextInt(listaIdVideo.size());
-                String idVideo=listaIdVideo.get(indiceAleatorio);
-
-                mostrarDatosTexto(indiceAleatorio);
-                youTubePlayer1.loadVideo(idVideo);
-                youTubePlayer1.play();
-                video.setIdVideo(idVideo);
-                */
-            }
-            else{
+            if(listaIdVideo.size() == 0){
                 String urlBuscarVideo="https://www.googleapis.com/youtube/v3/search?part=id,snippet&maxResults=50&type=video&q="+texto+"&key="+claveYT;
                 sacarJsonInfoVideoTitulo(urlBuscarVideo);
             }
